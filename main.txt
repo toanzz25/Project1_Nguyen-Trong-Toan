@@ -1,0 +1,42 @@
+import tkinter as tk
+
+from ui import UI
+from control import Control
+from measurement import Measurement
+from sweep import Sweep
+from data import Data
+
+class App:
+    def __init__(self, root):
+        self.root = root
+
+        self.running = False
+        self.freqs = []
+        self.values = []
+        self.overlays = []
+
+        self.inst = None
+
+        self.ui = UI(root, self)
+        self.control = Control(self)
+        self.measurement = Measurement(self)
+        self.sweep = Sweep(self)
+        self.data = Data(self)
+
+    def start(self):
+        self.control.start()
+
+    def stop(self):
+        self.control.stop()
+
+    def sweep_worker(self):
+        self.sweep.run()
+
+    def export(self):
+        self.data.export()
+
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = App(root)
+    root.mainloop()
